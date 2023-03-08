@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Web</title>
+    <style>
+        .world {
+            width: 80vw;
+            height: 60vh;
+            background-color: #fff000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* 3d 적용을 위한 원근감 속성 */
+            /* 가까울수록 극적인 3D효과가 나타난다... */
+            /* 눈과의 거리가 얼마나 떨어져 있냐를 의미한다고 보면 될듯 */
+            /* perspective: 500px; */
+
+
+        }
+
+        .card {
+            width: 100px;
+            height: 150px;
+            background-color: red;
+            /* border-radius, margin : em으로 설정 */
+            /* fontsize의 변화에 따라서 그 만큼의 상대적인 border radius를 주겠다는 의미... */
+            margin: 1em;
+            border-radius: 0.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* rem : html기준(16px) */
+            font-size: 1.5rem;
+            /* 카드가 다 동일한 중심에서 변경되길 원한다면? */
+            transform: perspective(500px) rotateY(45deg);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="world">
+        <div class="card">CARD</div>
+        <div class="card">CARD</div>
+        <div class="card">CARD</div>
+    </div>
+</body>
+
+</html>
