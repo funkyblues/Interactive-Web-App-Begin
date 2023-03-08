@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Web</title>
+    <style>
+        body {
+            background-color: #222;
+        }
+
+        /* 스프라이트 이미지로 CSS 애니메이션 생성 */
+        /* 굳이 이걸로 해야하나? gif는?? */
+        /* but gif는 alpha채널이 없다. 투명하게 할 수 없다. */
+        /* 여기서는 png 이미지를 사용해서 알파 채널을 쓸 수 있음 */
+        /* 그리고 코드로 애니메이션을 조절할 수 있음 */
+        @keyframes spaceship-ani {
+
+            /* 0% -> from으로 쓸 수 있음 */
+            /* 100% -> to로 쓸 수 있음 */
+            /* 시작점 생략 가능 */
+            to {
+                /* 이미지가 왼쪽으로 이동해야 애니메이션이 재생되는거 처럼 보이니까
+                -2550px */
+                background-position: -2550px 0;
+            }
+        }
+
+        .spaceship {
+            width: 150px;
+            height: 150px;
+            /* background 사이즈를 정해주는데, 시작점은 0 0.
+            width, height를 정해줘야 함
+            이때 width, height중 먼저 계산되는 걸 선정
+            먼저 계산되는 걸 적고, 나머지는 auto로 해주면 끝
+            auto 150px */
+            background: url('./sprite_spaceship.png') no-repeat 0 0 / auto 150px;
+            animation: spaceship-ani 1s infinite reverse steps(17);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="spaceship"></div>
+</body>
+
+</html>
