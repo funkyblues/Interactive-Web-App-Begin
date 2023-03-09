@@ -17,21 +17,15 @@
             perspective: 500px;
         }
 
-        /* 3D 효과가 html 요소 레벨을 거치면서, 전달되지 않는다.
-        world에 3d 효과를 줘도(perspective) 아래 레벨로는 영향을 미치지 않게된다...
-        따라서 아래 레벨에도 속성을 세팅해주어야 한다. */
         .card {
             position: relative;
-            width: 100px;
-            height: 150px;
+            /* width: 100px;
+            height: 150px; */
             margin: 1em;
             transform: rotateY(0deg);
-            /* 만약 회전하는 기준을 중심이 아니라 다른 곳으로 만들어주고 싶다면? */
-            /* transform-origin을 사용해주자. */
-            transform-origin: left;
             transition: 1s;
-            /* 이 속성을 추가해주어야 한다. */
-            transform-style: preserve-3d;
+            /* ie에서는 preserve-3d가 안된다...! ㅠ 그래서 일일히 다시 맞춰줘야한다. */
+            /* transform-style: preserve-3d; */
         }
 
         .card-side {
@@ -39,18 +33,36 @@
             align-items: center;
             justify-content: center;
 
-            /* 부모 기준으로 위치를 잡자. */
             position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            /* 여기까지~~ */
-
+            left: 50%;
+            top: 50%;
+            /* 폭, 높이의 절반만큼 offset 적용 */
+            margin: -75px 0px 0px -50px;
+            /* width: 100%;
+            height: 100%; */
+            width: 100px;
+            height: 150px;
             border-radius: 0.5em;
             font-size: 1.5rem;
+            transition: 1s;
 
-            /* 앞, 뒷면 모두, 뒷면을 안보이게 해주자! */
+            /* 표준으로 적용은 안되었지만, 새로나온 스펙들을 적용할 때 브라우저 벤더사들이  
+            접두어를 만들어둠 
+            사파리, 크롬 : -webkit-
+            모질라: -moz-
+            인터넷 익스플로러: -ms-
+            오페라: -o-
+            
+            새로나온 스펙을 지원해줄 수 있게끔 만들어진 녀석. (실험용 기능이라고도 할 수 있다.)
+            맨 마지막에는 접두어가 빠진 표준 속성을 적어주는게 좋다.
+            표준을 잘 지원하는 브라우저에서는 맨 아래에 써준게 다른 애들을 덮어써줄 수 있으니까
+
+            자동으로 붙여주는 라이브러리를 쓰거나, sass를 쓰거나... 방법은 많다.
+            쌩으로 쓸 때는 유의하자.
+            */
+            -webkit-backface-visibility: hidden;
+            -moz-backface-visibility: hidden;
+            -o-backface-visibility: hidden;
             backface-visibility: hidden;
         }
 
@@ -62,28 +74,31 @@
 
         .card-side-back {
             background-color: red;
-            /* 뒷면을 먼저 180도 뒤집어 둔다. */
             transform: rotateY(180deg);
         }
 
         .world:hover .card {
-            transform: rotateY(-180deg);
+            transform: rotateY(180deg);
+        }
+
+        .world:hover .card-side-front {
+            transform: rotateY(180deg);
+        }
+
+        .world:hover .card-side-back {
+            transform: rotateY(360deg);
         }
     </style>
 </head>
 
 <body>
+    <!-- IE는 perspective: 3d를 지원하지 않는다. -->
+    <!-- 그래서 card를 없애고, world 바로 밑에 카드를 두개 둔다.... -->
     <div class="world">
-        <!-- 부모는 position: relative로 해서 앞 뒷면 카드가 부모 기준으로 위치를 잡을 수 있게 된다 -->
-        <!-- 참고 : 자식이 부모기준으로 위치를 잡으려면 static 이 아닌 값이면 된다. -->
-        <!-- position의 default값은 static -->
-        <div class="card">
-            <!-- 앞면 카드, 뒷면 카드를 position: absolute로 고정시킬 것 -->
-            <div class="card-side card-side-front">F</div>
-            <!-- 앞 뒷면 모두 position: absolute라서, 밑에 있는 B가 앞으로 옴 -->
-            <!-- 뒷면은 처음부터 180도를 돌려둬야 3D로 앞 뒷면을 구현할 수 있다. -->
-            <div class="card-side card-side-back">B</div>
-        </div>
+        <!-- <div class="card"> -->
+        <div class="card-side card-side-front">F</div>
+        <div class="card-side card-side-back">B</div>
+        <!-- </div> -->
     </div>
 </body>
 
